@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Processo 2025</title>
+  <style>
+  body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0d1117; /* modo escuro */
+  margin: 0;
+  padding: 0;
+  color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* centraliza horizontalmente */
+}
+
+h1 {
+  color: #00bfff;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+form {
+  width: 90%;
+  max-width: 900px;
+  background-color: #161b22;
+  padding: 25px 30px;
+  box-shadow: 0 0 10px #00bfff;
+  border-radius: 12px;
+}
+
+
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      background-color: #111827;
+      color: #fff;
+      box-shadow: 0 0 6px #00f0ff55;
+    }
+
+    select:invalid {
+      color: #bbb;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    button {
+      margin-top: 25px;
+      background-color: #00f0ff;
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 8px #00f0ff;
+    }
+
+    button:hover {
+      background-color: #00c4d6;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cadastro de Processo 2025</h1>
+  <form action="/inserir" method="POST">
+    <h2>Dados do Processo</h2>
+    <label>Protocolo:</label>
+    <input type="text" name="protocolo" required>
+
+    <label>Observações:</label>
+    <textarea name="observacoes"></textarea>
+
+    <label>Número da Pasta:</label>
+    <input type="text" name="numero_pasta">
+
+    <label>Solicitação do Requerente:</label>
+    <select name="solicitacao_requerente" required>
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in solicitacoes_respostas %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Resposta do Departamento:</label>
+    <select name="resposta_departamento">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in solicitacoes_respostas %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Tramitação:</label>
+    <select name="tramitacao">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in tramitacoes %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Setor:</label>
+    <select name="setor">
+      <option value="" disabled selected>Selecione...</option>
+      {% for s in setores %}
+        <option value="{{ s }}">{{ s }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Tipologia:</label>
+    <select name="tipologia">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in tipologias %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Município:</label>
+    <select name="municipio">
+      <option value="" disabled selected>Selecione...</option>
+      {% for m in municipios %}
+        <option value="{{ m }}">{{ m }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Situação da Localização:</label>
+    <select name="situacao_localizacao">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in situacoes_localizacao %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Responsável pela Localização:</label>
+    <select name="responsavel_localizacao_cpf">
+      <option value="" disabled selected>Selecione...</option>
+      {% for cpf, nome in servidores %}
+        <option value="{{ cpf }}">{{ nome }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Início da Localização:</label>
+    <input type="date" name="inicio_localizacao">
+
+    <label>Fim da Localização:</label>
+    <input type="date" name="fim_localizacao">
+
+    <label>Situação da Análise:</label>
+    <select name="situacao_analise">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in situacoes_analise %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Responsável pela Análise:</label>
+    <select name="responsavel_analise_cpf">
+      <option value="" disabled selected>Selecione...</option>
+      {% for cpf, nome in servidores %}
+        <option value="{{ cpf }}">{{ nome }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Início da Análise:</label>
+    <input type="date" name="inicio_analise">
+
+    <label>Fim da Análise:</label>
+    <input type="date" name="fim_analise">
+
+    <label>Nome/Loteamento do Condomínio a ser Aprovado:</label>
+    <textarea name="nome_ou_loteamento_do_condominio_a_ser_aprovado"></textarea>
+    
+    <label>
+      <input type="checkbox" name="interesse_social">
+      Interesse Social
+    </label>
+
+    <h2>Dados do Requerente</h2>
+    <label>Nome:</label>
+    <input type="text" name="nome_requerente">
+
+    <label>Tipo:</label>
+    <select name="tipo_de_requerente">
+      <option value="" disabled selected>Selecione...</option>
+      <option value="PESSOA FÍSICA">PESSOA FÍSICA</option>
+      <option value="ÓRGÃO PÚBLICO">ÓRGÃO PÚBLICO</option>
+      <option value="PREFEITURA">PREFEITURA</option>
+      <option value="EMPRESA">EMPRESA</option>
+    </select>
+
+    <label>CPF/CNPJ:</label>
+    <input type="text" name="cpf_cnpj_requerente">
+
+    <h2>Dados do Proprietário</h2>
+    <label>Nome:</label>
+    <input type="text" name="nome_proprietario">
+
+    <label>CPF/CNPJ:</label>
+    <input type="text" name="cpf_cnpj_proprietario">
+
+    <h2>Dados do Imóvel</h2>
+    <label>Matrícula:</label>
+    <input type="text" name="matricula_imovel">
+
+    <label>Zona Estadual:</label>
+    <input type="text" name="zona_estadual">
+
+    <label>Zona Municipal:</label>
+    <input type="text" name="zona_municipal">
+
+    <label>Classificação Diretriz Viária:</label>
+    <select name="classificacao_diretriz">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in enums.classificacao_diretriz_viaria %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Faixa de Servidão:</label>
+    <select name="faixa_servidao">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in enums.faixa_servidao %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Curva de Inundação:</label>
+    <select name="curva_de_inundacao">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in enums.curva_de_inundacao %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>APA:</label>
+    <select name="apa">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in enums.apa %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>UTP:</label>
+    <select name="utp">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in enums.utp %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Manancial:</label>
+    <select name="manancial">
+      <option value="" disabled selected>Selecione...</option>
+      {% for item in enums.manancial %}
+        <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Área:</label>
+    <input type="number" step="0.01" name="area">
+
+    <label>Localidade:</label>
+    <textarea name="localidade_imovel"></textarea>
+
+    <label>Latitude:</label>
+    <input type="number" step="0.000001" name="latitude">
+
+    <label>Longitude:</label>
+    <input type="number" step="0.000001" name="longitude">
+
+        <label>
+      <input type="checkbox" name="lei_inclui_perimetro_urbano">
+      Lei Inclui Perímetro Urbano
+    </label>
+
+
+    <div class="button-group">
+      <button type="reset">Limpar</button>
+      <button type="submit">Enviar</button>
+    </div>
+  </form>
+
+</body>
+</html>
