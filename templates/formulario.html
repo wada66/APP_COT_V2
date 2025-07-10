@@ -299,6 +299,14 @@ form {
       <button type="reset">Limpar</button>
       <button type="submit">Enviar</button>
     </div>
+{% if caminho_pdf and protocolo_pdf %}
+  <div class="alert alert-success mt-3">
+    <p>Relatório do processo <strong>{{ protocolo_pdf }}</strong> gerado com sucesso!</p>
+    <a href="{{ url_for('baixar_pdf') }}" class="btn btn-primary">📄 Baixar Relatório em PDF</a>
+  </div>
+{% endif %}
+
+
   </form>
 
 </body>
