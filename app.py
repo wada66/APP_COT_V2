@@ -28,7 +28,7 @@ conn = psycopg2.connect(
 )
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY") or "sua_chave_super_segura"
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 def calcular_dias_uteis(inicio_str, fim_str):
     if not inicio_str or not fim_str:
