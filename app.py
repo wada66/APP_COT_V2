@@ -8,7 +8,7 @@ import numpy as np
 import glob
 import time
 import tempfile
-from relatorio import gerar_pdf
+from relatorio import gerar_pdf, gerar_pdf_requerente
 
 # Carregar variáveis do .env
 load_dotenv()
@@ -273,7 +273,7 @@ def inserir():
         dados_dict["dias_uteis_localizacao"] = dias_uteis_localizacao
         dados_dict["dias_uteis_analise"] = dias_uteis_analise
 
-        gerar_pdf(dados_dict, f.name)
+        gerar_pdf_requerente(dados_dict, f.name)
         caminho_pdf = f.name
         print(f"PDF gerado em: {caminho_pdf}")
 

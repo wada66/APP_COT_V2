@@ -81,3 +81,35 @@ def gerar_pdf(dados, caminho_pdf):
     escreve(dados.get("nome_ou_loteamento_do_condominio_a_ser_aprovado", "") or "Não informado")
 
     c.save()
+
+def gerar_pdf_requerente(dados, caminho_pdf):
+    c = canvas.Canvas(caminho_pdf, pagesize=A4)
+    largura, altura = A4
+    x = 2 * cm
+    y = altura - 2 * cm
+    linha_altura = 18
+
+    def escreve(texto, negrito=False):
+        nonlocal y
+        if y < 3 * cm:
+            c.showPage()
+            y = altura - 2 * cm
+        c.setFont("Helvetica-Bold" if negrito else "Helvetica", 10)
+        c.drawString(x, y, texto)
+        y -= linha_altura
+
+    c.setTitle("Relatório do Requerente")
+    c.setFont("Helvetica-Bold", 14)
+    c.drawCentredString(largura / 2, y, "Relatório do Requerente")
+    y -= linha_altura * 2
+
+    escreve(f"Data de geração do relatório: {date.today().strftime('%d/%m/%Y')}")
+
+    escreve("=== Dados Preenchidos ===", negrito=True)
+
+    for chave, valor in dados.items():
+        if valor not in [None, "", False]:
+            texto = f"{chave.replace('_', ' ').capitalize()}: {valor}"
+            escreve(texto)
+
+    c.save()
