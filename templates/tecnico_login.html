@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head><meta charset="UTF-8"><title>Login Técnico</title></head>
+<body>
+    <h1>Identificação do Técnico</h1>
+    <form method="post">
+        <label for="cpf">Escolha seu nome:</label>
+        <select name="cpf" required>
+            {% for cpf, nome in tecnicos %}
+            <option value="{{ cpf }}">{{ nome }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Entrar</button>
+    </form>
+</body>
+</html>

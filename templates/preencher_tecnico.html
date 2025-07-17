@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Complementar Processo - {{ protocolo }}</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #0d1117;
+        margin: 0; padding: 0;
+        color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        color: #00bfff;
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 20px;
+      }
+      form {
+        width: 90%;
+        max-width: 900px;
+        background-color: #161b22;
+        padding: 25px 30px;
+        box-shadow: 0 0 10px #00bfff;
+        border-radius: 12px;
+      }
+      label {
+        display: block;
+        margin-top: 18px;
+        font-weight: bold;
+      }
+      input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        background-color: #111827;
+        color: #fff;
+        box-shadow: 0 0 6px #00f0ff55;
+      }
+      select:invalid {
+        color: #bbb;
+      }
+      button {
+        margin-top: 25px;
+        background-color: #00f0ff;
+        color: #000;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 0 8px #00f0ff;
+      }
+      button:hover {
+        background-color: #00c4d6;
+      }
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+      }
+      #div-datas-localizacao {
+        margin-top: 15px;
+      }
+    </style>
+</head>
+<body>
+     {% with messages = get_flashed_messages() %}
+     {% if messages %}
+      <div class="flash-messages">
+        {% for message in messages %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+      </div>
+     {% endif %}
+     {% endwith %}
+    <h1>Complementar Processo: {{ protocolo }}</h1>
+    <form method="post">
+
+        <label for="resposta_departamento">Resposta do Departamento:</label>
+        <select name="resposta_departamento" id="resposta_departamento" required>
+            <option value="" disabled selected>Selecione</option>
+            {% for resposta in enums.resposta_departamento %}
+                <option value="{{ resposta }}" {% if dados.resposta_departamento == resposta %}selected{% endif %}>{{ resposta }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="tramitacao">Tramitação:</label>
+        <select name="tramitacao" id="tramitacao" required>
+            <option value="" disabled selected>Selecione</option>
+            {% for t in enums.tramitacoes %}
+                <option value="{{ t }}" {% if dados.tramitacao == t %}selected{% endif %}>{{ t }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Setor:</label>
+        <input name="setor" value="{{ session['tecnico_setor'] }}" readonly>
+
+        <label for="responsavel_localizacao_cpf">Responsável pela Localização:</label>
+        <select name="responsavel_localizacao_cpf" id="responsavel_localizacao_cpf" {% if dados.situacao_localizacao == 'NÃO PRECISA LOCALIZAR' %}disabled{% endif %} required>
+            <option value="" disabled selected>Selecione</option>
+            {% for cpf, nome in servidores %}
+                <option value="{{ cpf }}" {% if dados.responsavel_localizacao_cpf == cpf %}selected{% endif %}>{{ nome }} ({{ cpf }})</option>
+            {% endfor %}
+        </select>
+
+        <label for="situacao_localizacao">Situação da Localização:</label>
+        <select name="situacao_localizacao" id="situacao_localizacao" required onchange="toggleDatas()">
+            <option value="LOCALIZADA" {% if dados.situacao_localizacao == 'LOCALIZADA' %}selected{% endif %}>LOCALIZADA</option>
+            <option value="NÃO PRECISA LOCALIZAR" {% if dados.situacao_localizacao == 'NÃO PRECISA LOCALIZAR' %}selected{% endif %}>NÃO PRECISA LOCALIZAR</option>
+        </select>
+
+        <div id="div-datas-localizacao" {% if dados.situacao_localizacao == 'NÃO PRECISA LOCALIZAR' %}style="display:none"{% endif %}>
+            <label for="inicio_localizacao">Início da Localização:</label>
+            <input type="date" name="inicio_localizacao" id="inicio_localizacao" value="{{ dados.inicio_localizacao|default('') }}">
+
+            <label for="fim_localizacao">Fim da Localização:</label>
+            <input type="date" name="fim_localizacao" id="fim_localizacao" value="{{ dados.fim_localizacao|default('') }}">
+        </div>
+
+        {% if session.caminho_pdf_tecnico %}
+            <a href="{{ url_for('baixar_pdf_tecnico') }}" target="_blank" style="display: inline-block; margin-top: 20px; color: #00bfff; text-decoration: none;">📄 Baixar Relatório Técnico</a>
+        {% endif %}
+
+        <div class="button-group">
+            <button type="submit" name="acao" value="salvar">Salvar</button>
+            <button type="submit" name="acao" value="finalizar">Finalizar Processo</button>
+        </div>
+
+    </form>
+
+    <script>
+      function toggleDatas() {
+        var situacao = document.getElementById("situacao_localizacao").value;
+        var divDatas = document.getElementById("div-datas-localizacao");
+        var responsavel = document.getElementById("responsavel_localizacao_cpf");
+        if (situacao === "NÃO PRECISA LOCALIZAR") {
+            divDatas.style.display = "none";
+            responsavel.disabled = true;
+            responsavel.value = "";
+        } else {
+            divDatas.style.display = "block";
+            responsavel.disabled = false;
+        }
+      }
+
+      // chama toggle no carregamento para ajustar visual
+      window.onload = function() {
+        toggleDatas();
+      };
+    </script>
+    <script>
+        function toggleResponsavelObrigatorio() {
+        var situacao = document.getElementById("situacao_localizacao").value;
+        var responsavelSelect = document.getElementById("responsavel_localizacao_cpf");
+
+        if (situacao === "NÃO PRECISA LOCALIZAR") {
+            responsavelSelect.removeAttribute("required");
+            responsavelSelect.disabled = true;
+            responsavelSelect.value = ""; // limpa seleção
+        } else {
+        responsavelSelect.setAttribute("required", "required");
+        responsavelSelect.disabled = false;
+        }
+}
+
+// Executa ao carregar a página
+window.onload = function() {
+    toggleResponsavelObrigatorio();
+};
+
+// Executa toda vez que mudar o select da situação
+document.getElementById("situacao_localizacao").addEventListener("change", toggleResponsavelObrigatorio);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Processo Registrado</title>
+</head>
+<body>
+    <h2>Protocolo {{ protocolo }} registrado com sucesso!</h2>
+
+    {% if caminho_pdf %}
+        <a href="{{ url_for('baixar_pdf') }}" target="_blank">
+            <button>📄 Baixar Relatório do Requerente</button>
+        </a>
+    {% endif %}
+
+    <br><br>
+    <a href="{{ url_for('entrada') }}"><button>Voltar ao Início</button></a>
+</body>
+</html>

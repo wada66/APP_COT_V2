@@ -85,7 +85,7 @@ form {
 <body>
 
   <h1>Cadastro de Processo 2025</h1>
-  <form action="/inserir" method="POST">
+  <form action="{{ url_for('inserir') }}" method="post">
     <h2>Dados do Processo</h2>
     <label>Protocolo:</label>
     <input type="text" name="protocolo" required>
@@ -104,29 +104,7 @@ form {
       {% endfor %}
     </select>
 
-    <label>Resposta do Departamento:</label>
-    <select name="resposta_departamento">
-      <option value="" disabled selected>Selecione...</option>
-      {% for item in solicitacoes_respostas %}
-        <option value="{{ item }}">{{ item }}</option>
-      {% endfor %}
-    </select>
 
-    <label>Tramitação:</label>
-    <select name="tramitacao">
-      <option value="" disabled selected>Selecione...</option>
-      {% for item in tramitacoes %}
-        <option value="{{ item }}">{{ item }}</option>
-      {% endfor %}
-    </select>
-
-    <label>Setor:</label>
-    <select name="setor">
-      <option value="" disabled selected>Selecione...</option>
-      {% for s in setores %}
-        <option value="{{ s }}">{{ s }}</option>
-      {% endfor %}
-    </select>
 
     <label>Tipologia:</label>
     <select name="tipologia">
@@ -144,49 +122,7 @@ form {
       {% endfor %}
     </select>
 
-    <label>Situação da Localização:</label>
-    <select name="situacao_localizacao">
-      <option value="" disabled selected>Selecione...</option>
-      {% for item in situacoes_localizacao %}
-        <option value="{{ item }}">{{ item }}</option>
-      {% endfor %}
-    </select>
 
-    <label>Responsável pela Localização:</label>
-    <select name="responsavel_localizacao_cpf">
-      <option value="" disabled selected>Selecione...</option>
-      {% for cpf, nome in servidores %}
-        <option value="{{ cpf }}">{{ nome }}</option>
-      {% endfor %}
-    </select>
-
-    <label>Início da Localização:</label>
-    <input type="date" name="inicio_localizacao">
-
-    <label>Fim da Localização:</label>
-    <input type="date" name="fim_localizacao">
-
-    <label>Situação da Análise:</label>
-    <select name="situacao_analise">
-      <option value="" disabled selected>Selecione...</option>
-      {% for item in situacoes_analise %}
-        <option value="{{ item }}">{{ item }}</option>
-      {% endfor %}
-    </select>
-
-    <label>Responsável pela Análise:</label>
-    <select name="responsavel_analise_cpf">
-      <option value="" disabled selected>Selecione...</option>
-      {% for cpf, nome in servidores %}
-        <option value="{{ cpf }}">{{ nome }}</option>
-      {% endfor %}
-    </select>
-
-    <label>Início da Análise:</label>
-    <input type="date" name="inicio_analise">
-
-    <label>Fim da Análise:</label>
-    <input type="date" name="fim_analise">
 
     <label>Nome/Loteamento do Condomínio a ser Aprovado:</label>
     <textarea name="nome_ou_loteamento_do_condominio_a_ser_aprovado"></textarea>

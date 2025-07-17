@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Técnico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f8f8f8;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            margin-top: 40px;
+            color: #555;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        a.btn {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #28a745;
+            color: white;
+            margin-right: 5px;
+        }
+        a.btn:hover {
+            background-color: #218838;
+        }
+        .btn-secondary {
+            background-color: #007BFF;
+        }
+        .btn-secondary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bem-vindo, {{ nome }} ({{ setor }})</h1>
+
+    <h2>📂 Processos Disponíveis</h2>
+    {% if disponiveis %}
+    <table>
+        <tr>
+            <th>Protocolo</th>
+            <th>Tipologia</th>
+            <th>Município</th>
+            <th>Ações</th>
+        </tr>
+        {% for protocolo, tipologia, municipio in disponiveis %}
+        <tr>
+            <td>{{ protocolo }}</td>
+            <td>{{ tipologia }}</td>
+            <td>{{ municipio }}</td>
+            <td>
+                <a href="{{ url_for('visualizar_processo', protocolo=protocolo) }}" class="btn btn-secondary">Visualizar</a>
+                <a href="{{ url_for('captar_processo', protocolo=protocolo) }}" class="btn">Captar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Nenhum processo disponível no momento.</p>
+    {% endif %}
+
+    <h2>📁 Seus Processos Capturados</h2>
+    {% if meus %}
+    <table>
+        <tr>
+            <th>Protocolo</th>
+            <th>Tipologia</th>
+            <th>Município</th>
+            <th>Ações</th>
+        </tr>
+        {% for protocolo, tipologia, municipio in meus %}
+        <tr>
+            <td>{{ protocolo }}</td>
+            <td>{{ tipologia }}</td>
+            <td>{{ municipio }}</td>
+            <td>
+                <a href="{{ url_for('visualizar_processo', protocolo=protocolo) }}" class="btn btn-secondary">Visualizar</a>
+                <a href="{{ url_for('preencher_tecnico', protocolo=protocolo) }}" class="btn">Complementar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Você ainda não capturou nenhum processo.</p>
+    {% endif %}
+
+</body>
+</html>

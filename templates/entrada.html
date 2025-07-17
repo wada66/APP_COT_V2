@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Entrada no Sistema</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; background-color: #0d1117; }
+        .opcoes { display: flex; justify-content: center; gap: 50px; }
+        .card {
+            border: 2px solid #ccc; border-radius: 10px; padding: 30px; width: 200px;
+            text-decoration: none; color: #00bfff; background-color: #0d1117;
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: scale(1.05); border-color: #007BFF; }
+    </style>
+</head>
+<body>
+    <h1>Bem-vindo</h1>
+    <p>Escolha como deseja acessar o sistema:</p>
+    <div class="opcoes">
+        <a href="{{ url_for('formulario') }}" class="card">
+            <h2>Requerente</h2>
+            <p>Preencher novo processo</p>
+        </a>
+        <a href="{{ url_for('tecnico_login') }}" class="card">
+            <h2>Técnico</h2>
+            <p>Acessar como servidor</p>
+        </a>
+    </div>
+</body>
+</html>
