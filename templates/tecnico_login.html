@@ -1,16 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head><meta charset="UTF-8"><title>Login Técnico</title></head>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Técnico</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0d1117; /* modo escuro */
+      margin: 0;
+      padding: 0;
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* centraliza horizontalmente */
+      height: 100vh;
+      justify-content: center; /* centraliza verticalmente */
+    }
+
+    h1 {
+      color: #00bfff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      width: 90%;
+      max-width: 400px;
+      background-color: #161b22;
+      padding: 25px 30px;
+      box-shadow: 0 0 10px #00bfff;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      background-color: #111827;
+      color: #fff;
+      box-shadow: 0 0 6px #00f0ff55;
+      margin-bottom: 25px;
+    }
+
+    button {
+      background-color: #00f0ff;
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 8px #00f0ff;
+    }
+
+    button:hover {
+      background-color: #00c4d6;
+    }
+  </style>
+</head>
 <body>
-    <h1>Identificação do Técnico</h1>
-    <form method="post">
-        <label for="cpf">Escolha seu nome:</label>
-        <select name="cpf" required>
-            {% for cpf, nome in tecnicos %}
-            <option value="{{ cpf }}">{{ nome }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Entrar</button>
-    </form>
+  <h1>Identificação do Técnico</h1>
+  <form method="post">
+    <label for="cpf">Escolha seu nome:</label>
+    <select name="cpf" id="cpf" required>
+      {% for cpf, nome in tecnicos %}
+      <option value="{{ cpf }}">{{ nome }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Entrar</button>
+  </form>
 </body>
 </html>

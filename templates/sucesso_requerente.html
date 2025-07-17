@@ -1,19 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Processo Registrado</title>
+  <meta charset="UTF-8" />
+  <title>Processo Registrado</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0d1117; /* modo escuro */
+      margin: 0;
+      padding: 0;
+      color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* centraliza horizontalmente */
+      justify-content: center; /* centraliza verticalmente */
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #00bfff;
+      margin-bottom: 30px;
+    }
+
+    a {
+      text-decoration: none;
+      margin: 10px;
+    }
+
+    button {
+      background-color: #00f0ff;
+      color: #000;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 8px #00f0ff;
+      min-width: 220px;
+    }
+
+    button:hover {
+      background-color: #00c4d6;
+    }
+  </style>
 </head>
 <body>
-    <h2>Protocolo {{ protocolo }} registrado com sucesso!</h2>
+  <h2>Protocolo {{ protocolo }} registrado com sucesso!</h2>
 
-    {% if caminho_pdf %}
-        <a href="{{ url_for('baixar_pdf') }}" target="_blank">
-            <button>📄 Baixar Relatório do Requerente</button>
-        </a>
-    {% endif %}
+  {% if caminho_pdf %}
+    <a href="{{ url_for('baixar_pdf') }}" target="_blank">
+      <button>📄 Baixar Relatório do Requerente</button>
+    </a>
+  {% endif %}
 
-    <br><br>
-    <a href="{{ url_for('entrada') }}"><button>Voltar ao Início</button></a>
+  <a href="{{ url_for('entrada') }}">
+    <button>Voltar ao Início</button>
+  </a>
 </body>
 </html>
