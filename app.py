@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, request, redirect, url_for, session, send_file
+from flask import Flask, flash, render_template, request, redirect, url_for, session, send_file, get_flashed_messages
 import psycopg2
 from psycopg2 import sql
 from datetime import date, timedelta, datetime
@@ -449,7 +449,9 @@ def preencher_tecnico(protocolo):
                     gerar_pdf(dados_dict, f.name)
                     session["caminho_pdf_tecnico"] = f.name
                     session["protocolo_pdf_tecnico"] = protocolo
-                
+                          
+                flash("Processo finalizado com sucesso!", "success")
+     
         except Exception as e:
                         conn.rollback()
                         return f"Erro ao salvar informações técnicas: {e}", 500
