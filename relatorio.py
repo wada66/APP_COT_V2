@@ -69,7 +69,6 @@ def gerar_pdf(dados, caminho_pdf):
     escreve(f"Início da Localização: {dados.get('inicio_localizacao')}")
     escreve(f"Fim da Localização: {dados.get('fim_localizacao')}")
     escreve(f"Dias úteis Localização: {dados.get('dias_uteis_localizacao')}")
-    escreve(f"Situação da Análise: {dados.get('situacao_analise')}")
     escreve(f"Responsável pela Análise: {dados.get('responsavel_analise_cpf')}")
     escreve(f"Início da Análise: {dados.get('inicio_analise')}")
     escreve(f"Fim da Análise: {dados.get('fim_analise')}")

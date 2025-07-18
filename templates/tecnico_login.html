@@ -74,9 +74,12 @@
   <form method="post">
     <label for="cpf">Escolha seu nome:</label>
     <select name="cpf" id="cpf" required>
+      <option value="" disabled selected></option>
       {% for cpf, nome in tecnicos %}
       <option value="{{ cpf }}">{{ nome }}</option>
       {% endfor %}
+    </select>
+
     </select>
     <button type="submit">Entrar</button>
   </form>
