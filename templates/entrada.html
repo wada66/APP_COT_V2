@@ -3,15 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Entrada no Sistema</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; background-color: #0d1117; }
-        .opcoes { display: flex; justify-content: center; gap: 50px; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #0d1117;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* centraliza na vertical */
+            align-items: center;     /* centraliza na horizontal */
+            min-height: 100vh;       /* altura total da tela */
+            padding-top: 5px; /* 👈 sobe visualmente o conteúdo */ 
+        }
+
+        h1, p {
+            color: #00bfff; /* Aqui define o azul clarinho */
+        }
+
+        .opcoes {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
         .card {
-            border: 2px solid #ccc; border-radius: 10px; padding: 30px; width: 200px;
-            text-decoration: none; color: #00bfff; background-color: #0d1117;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 30px;
+            width: 200px;
+            text-decoration: none;
+            color: #00bfff;
+            background-color: #0d1117;
             transition: transform 0.2s;
         }
-        .card:hover { transform: scale(1.05); border-color: #007BFF; }
+
+        .card:hover {
+            transform: scale(1.05);
+            border-color: #007BFF;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                width: 90%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -29,3 +69,4 @@
     </div>
 </body>
 </html>
+
