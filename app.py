@@ -9,6 +9,7 @@ import glob
 import time
 import tempfile
 from relatorio import gerar_pdf, gerar_pdf_requerente
+from relatorio import obter_dados_relatorio
 
 # Carregar variáveis do .env
 load_dotenv()
@@ -429,10 +430,7 @@ def preencher_tecnico(protocolo):
             if finalizando:
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as f:
                     # Buscar todos os dados do processo antes de gerar o PDF
-                    cur.execute("SELECT * FROM processos_2025 WHERE protocolo = %s", (protocolo,))
-                    processo = cur.fetchone()
-                    colunas = [desc[0] for desc in cur.description]
-                    dados_dict = dict(zip(colunas, processo)) if processo else {}
+                    dados_dict = obter_dados_relatorio(protocolo, conn)
                     dados_dict["dias_uteis_localizacao"] = dias_uteis_localizacao
                     dados_dict["dias_uteis_analise"] = dias_uteis_analise
 

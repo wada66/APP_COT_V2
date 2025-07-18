@@ -2,6 +2,31 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
 from datetime import date
+import psycopg2
+
+
+def obter_dados_relatorio(protocolo, conn):
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT 
+            p.*, 
+            r.nome_requerente, r.tipo_de_requerente, r.cpf_cnpj_requerente,
+            pr.nome_proprietario, pr.cpf_cnpj_proprietario,
+            i.matricula_imovel, i.zona_municipal, i.zona_estadual,
+            i.classificacao_diretriz_viaria_metropolitana, i.faixa_servidao,
+            i.curva_de_inundacao, i.apa, i.utp, i.manancial,
+            i.area, i.localidade_imovel, i.latitude, i.longitude
+        FROM processos_2025 p
+        LEFT JOIN requerente r ON p.requerente_cpf_cnpj = r.cpf_cnpj_requerente
+        LEFT JOIN proprietario pr ON p.proprietario_cpf_cnpj = pr.cpf_cnpj_proprietario
+        LEFT JOIN imovel i ON p.matricula_imovel = i.matricula_imovel
+        WHERE p.protocolo = %s
+    """, (protocolo,))
+    row = cur.fetchone()
+    colunas = [desc[0] for desc in cur.description]
+    return dict(zip(colunas, row)) if row else {}
+
+
 
 def gerar_pdf(dados, caminho_pdf):
     c = canvas.Canvas(caminho_pdf, pagesize=A4)
