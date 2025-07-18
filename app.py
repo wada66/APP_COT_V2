@@ -416,14 +416,15 @@ def preencher_tecnico(protocolo):
                     fim_localizacao = %s,
                     dias_uteis_localizacao = %s,
                     fim_analise = %s,
-                    dias_uteis_analise = %s
+                    dias_uteis_analise = %s,
+                    responsavel_localizacao_cpf = %s
                 WHERE protocolo = %s
             """, (
                 resposta_departamento, tramitacao, setor,
                 situacao_localizacao, inicio_localizacao, fim_localizacao,
                 dias_uteis_localizacao,
                 fim_analise,
-                dias_uteis_analise,
+                dias_uteis_analise, responsavel_localizacao_cpf,
                 protocolo
             ))
             conn.commit()

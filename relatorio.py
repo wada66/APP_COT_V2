@@ -89,7 +89,7 @@ def gerar_pdf(dados, caminho_pdf):
     escreve(f"Matrícula: {dados.get('matricula_imovel')}")
     escreve(f"Zona Estadual: {dados.get('zona_estadual')}")
     escreve(f"Zona Municipal: {dados.get('zona_municipal')}")
-    escreve(f"Classificação Diretriz Viária: {dados.get('classificacao_diretriz')}")
+    escreve(f"Classificação Diretriz Viária: {dados.get('classificacao_diretriz_viaria_metropolitana')}")
     escreve(f"Faixa de Servidão: {dados.get('faixa_servidao')}")
     escreve(f"Curva de Inundação: {dados.get('curva_de_inundacao')}")
     escreve(f"APA: {dados.get('apa')}")
