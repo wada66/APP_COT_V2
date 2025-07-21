@@ -156,7 +156,7 @@ def inserir():
     responsavel_localizacao_cpf = request.form.get("responsavel_localizacao_cpf") or None
     inicio_localizacao = request.form.get("inicio_localizacao") or None
     fim_localizacao = request.form.get("fim_localizacao") or None
-    situacao_analise = request.form.get("situacao_analise")
+    
     responsavel_analise_cpf = request.form.get("responsavel_analise_cpf") or None
     inicio_analise = request.form.get("inicio_analise") or None
     fim_analise = request.form.get("fim_analise") or None
@@ -237,17 +237,17 @@ def inserir():
             INSERT INTO processos_2025 (
                 protocolo, observacoes, matricula_imovel, numero_pasta, solicitacao_requerente,
                 resposta_departamento, tramitacao, setor, tipologia, municipio, situacao_localizacao,
-                responsavel_localizacao_cpf, inicio_localizacao, fim_localizacao, situacao_analise,
+                responsavel_localizacao_cpf, inicio_localizacao, fim_localizacao, 
                 responsavel_analise_cpf, inicio_analise, fim_analise, dias_uteis_analise,
                 dias_uteis_localizacao, requerente_cpf_cnpj, proprietario_cpf_cnpj,
                 nome_ou_loteamento_do_condominio_a_ser_aprovado, interesse_social,
                 data_entrada, data_previsao_resposta
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (
             protocolo, observacoes, matricula_imovel, numero_pasta, solicitacao_requerente,
             resposta_departamento, tramitacao, setor, tipologia, municipio, situacao_localizacao,
-            responsavel_localizacao_cpf, inicio_localizacao, fim_localizacao, situacao_analise,
+            responsavel_localizacao_cpf, inicio_localizacao, fim_localizacao,
             responsavel_analise_cpf, inicio_analise, fim_analise,
             dias_uteis_analise, dias_uteis_localizacao,
             requerente_cpf_cnpj, proprietario_cpf_cnpj, nome_ou_loteamento_do_condominio,
@@ -324,7 +324,7 @@ def tecnico_dashboard():
 
     # Lista de processos capturados pelo técnico logado
     cur.execute("""
-        SELECT protocolo, tipologia, municipio FROM processos_2025 
+        SELECT protocolo, tipologia, municipio, situacao_analise FROM processos_2025 
         WHERE responsavel_analise_cpf = %s
     """, (session["tecnico_cpf"],))
     meus = cur.fetchall()
@@ -380,6 +380,8 @@ def preencher_tecnico(protocolo):
         situacao_localizacao = request.form.get("situacao_localizacao")
         inicio_localizacao = request.form.get("inicio_localizacao")
         fim_localizacao = request.form.get("fim_localizacao")
+        situacao_analise = "FINALIZADA" if finalizando else "NÃO FINALIZADA"
+
 
         if situacao_localizacao == "NÃO PRECISA LOCALIZAR":
             inicio_localizacao = None
@@ -417,14 +419,15 @@ def preencher_tecnico(protocolo):
                     dias_uteis_localizacao = %s,
                     fim_analise = %s,
                     dias_uteis_analise = %s,
-                    responsavel_localizacao_cpf = %s
+                    responsavel_localizacao_cpf = %s,
+                    situacao_analise = %s
                 WHERE protocolo = %s
             """, (
                 resposta_departamento, tramitacao, setor,
                 situacao_localizacao, inicio_localizacao, fim_localizacao,
                 dias_uteis_localizacao,
                 fim_analise,
-                dias_uteis_analise, responsavel_localizacao_cpf,
+                dias_uteis_analise, responsavel_localizacao_cpf, situacao_analise,
                 protocolo
             ))
             conn.commit()

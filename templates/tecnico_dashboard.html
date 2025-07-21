@@ -121,7 +121,7 @@
             <th>Município</th>
             <th>Ações</th>
         </tr>
-        {% for protocolo, tipologia, municipio in meus %}
+        {% for protocolo, tipologia, municipio, situacao_analise in meus %}
         <tr>
             <td>{{ protocolo }}</td>
             <td>{{ tipologia }}</td>
@@ -129,6 +129,11 @@
             <td>
                 <a href="{{ url_for('visualizar_processo', protocolo=protocolo) }}" class="btn btn-secondary">Visualizar</a>
                 <a href="{{ url_for('preencher_tecnico', protocolo=protocolo) }}" class="btn">Complementar</a>
+
+                     {% if situacao_analise == "FINALIZADA" %}
+                     <span style="background-color: red; color: white; padding: 6px 10px; border-radius: 5px; margin-left: 5px;">FINALIZADA</span>
+                     {% endif %}
+            </td>
             </td>
         </tr>
         {% endfor %}
